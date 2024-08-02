@@ -1,28 +1,28 @@
-import express, { Request, Response } from "express";
-import cors from "cors";
-import router from "./app/modules/products/products.route";
+import cors from 'cors';
+import express, { Request, Response } from 'express';
+import router from './app/modules/products/products.route';
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://kbd-deep.vercel.app"],
+    origin: ['http://localhost:3000'],
   })
 );
 app.use(express.json());
-app.use("/api", router);
+app.use('/api', router);
 
-app.get("/", (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.send({
     success: true,
-    message: "Welcome to the API",
+    message: 'Welcome to the API',
   });
 });
 
-app.use("*", (req, res) => {
+app.use('*', (req, res) => {
   res.json({
     success: false,
-    message: "ROUTE NOT FOUND.",
+    message: 'ROUTE NOT FOUND.',
   });
 });
 

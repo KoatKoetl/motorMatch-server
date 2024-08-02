@@ -7,4 +7,5 @@ export type TProduct = {
   quantity: number;
   rating: number;
   image: string;
+  password: string;
 };

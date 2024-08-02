@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Product } from "./products.model";
-import { TProduct } from "./products.type";
+import config from '../../config';
+import { Product } from './products.model';
+import { TProduct } from './products.type';
 
 export const createProductIntoDB = async (data: TProduct) => {
   const isExists = await Product.exists({ name: data.name });
   if (isExists) {
-    throw new Error("This product already exits.");
+    throw new Error('This product already exits.');
+  }
+  if (data.password !== config.password) {
+    throw new Error('Your password is incorrect. Write action denied.');
   }
   const res = await Product.create(data);
   return res;
@@ -23,10 +27,7 @@ export const getProductsFromDB = async ({ search, sort, min, max }: any) => {
     sorted.price = sort;
   }
   if (search) {
-    query.$or = [
-      { name: { $regex: search, $options: "i" } },
-      { brand: { $regex: search, $options: "i" } },
-    ];
+    query.$or = [{ name: { $regex: search, $options: 'i' } }, { brand: { $regex: search, $options: 'i' } }];
   }
   if (min) {
     query.price.$gte = min;
@@ -50,10 +51,7 @@ export const deleteProductFromDB = async (id: string) => {
   return res;
 };
 
-export const updateProductIntoDB = async (
-  id: string,
-  body: Partial<TProduct>
-) => {
+export const updateProductIntoDB = async (id: string, body: Partial<TProduct>) => {
   const res = await Product.findByIdAndUpdate(id, body, { new: true });
   return res;
 };

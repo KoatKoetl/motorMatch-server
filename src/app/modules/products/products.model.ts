@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import { TProduct } from "./products.type";
+import mongoose, { Schema } from 'mongoose';
+import { TProduct } from './products.type';
 
 const productSchema = new Schema<TProduct>({
   name: { type: String, required: true, unique: true },
@@ -12,4 +12,4 @@ const productSchema = new Schema<TProduct>({
   image: { type: String, required: true },
 });
 
-export const Product = mongoose.model("Products", productSchema);
+export const Product = mongoose.model('Products', productSchema);
